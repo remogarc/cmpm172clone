@@ -20,16 +20,28 @@ public class PauseMenuAkash : MonoBehaviour
     public bool escape = false;
     public float speed = 20f;
     public GameObject pause;
+    
+    bool triangle;
+    PlayerControls pc;
     // public float mouseValue;
-    // public int test;
-
+    // public int test;=
+    void Awake(){
+        pc = new PlayerControls();
+        pc.Gameplay.EscapePS5.performed += ctx => triangle = true;
+        pc.Gameplay.EscapePS5.canceled += ctx => triangle = false;
+    }
+    void OnEnable() {
+        pc.Gameplay.Enable();
+    }
+    void OnDisable(){
+        pc.Gameplay.Disable();
+    }
     // Start is called before the first frame update
     void Start()
     {
         // pause.SetActive(false);
         // mouseValue = mouseSens.value;
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -40,52 +52,56 @@ public class PauseMenuAkash : MonoBehaviour
             main_cam.transform.position += menu_cam.transform.position.normalized * speed * Time.deltaTime;
         }
         pos = player.transform.position;
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) || triangle)
         {
             // pause.SetActive(true);
             // options.SetActive(false);
-            // Cursor.lockState = CursorLockMode.None;
-            // Cursor.visible = true;
-            // pm.enabled = false;
-            // Time.timeScale = 0f;
+
             // mouseValue = mouseSens.value;
             cb.enabled = false;
             escape = true; 
             main_cam.transform.rotation = menu_cam.transform.rotation;
             pause.SetActive(true);
+            pm.enabled = false;
+            // Cursor.lockState = CursorLockMode.None;
+            // Cursor.visible = true;
+            // Time.timeScale = 0f;
         }    
     }
 
-    // public void BackButtonPause(){
-    //     Cursor.lockState = CursorLockMode.Locked;
-    //     Cursor.visible = false;
-    //     pause.SetActive(false);
-    //     Time.timeScale = 1;
-    //     pm.enabled =true;
-    //     options.SetActive(false);
-    // }
+    public void BackButtonPause(){
+        pm.enabled =true;
+        cb.enabled = true;
+        escape = false;
+        pause.SetActive(false);
+    }
     // public void BackButtonOptions(){
     //     options.SetActive(false);
     //     pause.SetActive(true);
     // }
 
-    // public void ExitButtonPause(){
-    //     Application.Quit();
-    // }
+    public void ExitButtonPause(){
+        Application.Quit();
+    }
 
     // public void OptionsButtonPause(){
     //     pause.SetActive(false);
     //     options.SetActive(true);
     // }
-    // public void SaveGame(){
-    //     Debug.Log(pos);
-    //     SaveSystem.SavePlayer(pos);
-    // }
-    // public void LoadGame(){
-    //     PlayerData data = SaveSystem.LoadPlayer();
-    //     Debug.Log(data.position[0]);
-    //     Debug.Log(data.position[1]);
-    //     Debug.Log(data.position[2]);
-    //     player.transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
-    // }
+    public void SaveGame(){
+        SaveSystem.SavePlayer(player.transform.position);
+        Debug.Log("saved.");
+    }
+    public void LoadGame(){
+        PlayerData data = SaveSystem.LoadPlayer();
+        Debug.Log(data.position[0]);
+        Debug.Log(data.position[1]);
+        Debug.Log(data.position[2]);
+        pm.enabled =true;
+        cb.enabled = true;
+        escape = false;
+        pause.SetActive(false);
+        player.transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+        Debug.Log(player.transform.position); 
+    }
 }
