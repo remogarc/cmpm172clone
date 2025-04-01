@@ -10,7 +10,7 @@ public class PauseMenuAkash : MonoBehaviour
 {
 
     // public GameObject pause;
-    // public GameObject options;
+    public GameObject options;
     public PlayerMovement pm; 
     public GameObject player; 
     public Vector3 pos;
@@ -20,7 +20,8 @@ public class PauseMenuAkash : MonoBehaviour
     public bool escape = false;
     public float speed = 20f;
     public GameObject pause;
-    
+    public GameObject option_back;
+    public GameObject option_button;
     bool triangle;
     PlayerControls pc;
     // public float mouseValue;
@@ -75,19 +76,25 @@ public class PauseMenuAkash : MonoBehaviour
         escape = false;
         pause.SetActive(false);
     }
-    // public void BackButtonOptions(){
-    //     options.SetActive(false);
-    //     pause.SetActive(true);
-    // }
+    public void BackButtonOptions(){
+        options.SetActive(false);
+        pause.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = option_button;
+        EventSystem.current.SetSelectedGameObject(option_button); // Apply selection
+    }
 
     public void ExitButtonPause(){
         Application.Quit();
     }
 
-    // public void OptionsButtonPause(){
-    //     pause.SetActive(false);
-    //     options.SetActive(true);
-    // }
+    public void OptionsButtonPause(){
+        pause.SetActive(false);
+        options.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = option_back;
+        EventSystem.current.SetSelectedGameObject(option_back); // Apply selection
+    }
     public void SaveGame(){
         SaveSystem.SavePlayer(player.transform.position);
         Debug.Log("saved.");
