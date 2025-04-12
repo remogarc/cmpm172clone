@@ -380,7 +380,7 @@
             #pragma vertex vp
             #pragma fragment fp
 
-            #include "Random.cginc"
+            #include "../Random.cginc"
 
             float4 fp(v2f i) : SV_Target {
                 float luminance = tex2D(_MainTex, i.uv).a;
@@ -409,7 +409,7 @@
             #pragma vertex vp
             #pragma fragment fp
 
-            #include "Random.cginc"
+            #include "../Random.cginc"
 
             float4 fp(v2f i) : SV_Target {
                 float edge = tex2D(_MainTex, i.uv).a;
@@ -436,7 +436,7 @@
             #pragma vertex vp
             #pragma fragment fp
 
-            #include "Random.cginc"
+            #include "../Random.cginc"
 
             float4 fp(v2f i) : SV_Target {
                 float4 ink = tex2D(_InkTex, i.uv);
