@@ -11,6 +11,7 @@ public class PauseMenuAkash : MonoBehaviour
 
     // public GameObject pause;
     public GameObject options;
+    public GameObject camera;
     public PlayerMovement pm; 
     public GameObject player; 
     public Vector3 pos;
@@ -22,6 +23,8 @@ public class PauseMenuAkash : MonoBehaviour
     public GameObject pause;
     public GameObject option_back;
     public GameObject option_button;
+    public GameObject camera_back;
+    public GameObject camera_button;
     bool triangle;
     PlayerControls pc;
     public Vector3 offset = new Vector3(0f, 10f, -20f); // how far up and back to move
@@ -91,6 +94,14 @@ public class PauseMenuAkash : MonoBehaviour
         EventSystem.current.firstSelectedGameObject = option_button;
         EventSystem.current.SetSelectedGameObject(option_button); // Apply selection
     }
+    public void BackButtonCamera()
+    {
+        camera.SetActive(false);
+        options.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = camera_button;
+        EventSystem.current.SetSelectedGameObject(camera_button); // Apply selection
+    }
 
     public void ExitButtonPause(){
         Application.Quit();
@@ -103,6 +114,15 @@ public class PauseMenuAkash : MonoBehaviour
         EventSystem.current.firstSelectedGameObject = option_back;
         EventSystem.current.SetSelectedGameObject(option_back); // Apply selection
     }
+    public void CameraButtonPause()
+    {
+        options.SetActive(false);
+        camera.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = camera_back;
+        EventSystem.current.SetSelectedGameObject(camera_back); // Apply selection
+    }
+
     public void SaveGame(){
         SaveSystem.SavePlayer(player.transform.position);
         Debug.Log("saved.");
