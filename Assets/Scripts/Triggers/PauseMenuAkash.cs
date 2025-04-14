@@ -24,6 +24,10 @@ public class PauseMenuAkash : MonoBehaviour
     public GameObject option_button;
     bool triangle;
     PlayerControls pc;
+    public Vector3 offset = new Vector3(0f, 10f, -20f); // how far up and back to move
+    private Vector3 targetPosition;
+    public Camera mc;    
+
     // public float mouseValue;
     // public int test;=
     void Awake(){
@@ -42,15 +46,17 @@ public class PauseMenuAkash : MonoBehaviour
     {
         // pause.SetActive(false);
         // mouseValue = mouseSens.value;
+        targetPosition = transform.position + offset;
     }
     // Update is called once per frame
     void Update()
     {
         if(escape){
-            if(main_cam.transform.position.x <= -80f){
+            if(Vector3.Distance(transform.position, targetPosition) < 0.01f){
                 escape = false;
+                mc.fieldOfView = 137.0f;
             }
-            main_cam.transform.position += menu_cam.transform.position.normalized * speed * Time.deltaTime;
+            main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, menu_cam.transform.position, speed * Time.deltaTime);
         }
         pos = player.transform.position;
         if(Input.GetKeyDown(KeyCode.Escape) || triangle)
@@ -62,6 +68,7 @@ public class PauseMenuAkash : MonoBehaviour
             cb.enabled = false;
             escape = true; 
             main_cam.transform.rotation = menu_cam.transform.rotation;
+            // main_cam.transform.position = menu_cam.transform.position;
             pause.SetActive(true);
             pm.enabled = false;
             // Cursor.lockState = CursorLockMode.None;
@@ -75,6 +82,7 @@ public class PauseMenuAkash : MonoBehaviour
         cb.enabled = true;
         escape = false;
         pause.SetActive(false);
+        mc.fieldOfView = 55.2f;
     }
     public void BackButtonOptions(){
         options.SetActive(false);

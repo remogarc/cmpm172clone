@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PathTo3DShape : MonoBehaviour
 {
@@ -14,10 +15,28 @@ public class PathTo3DShape : MonoBehaviour
     public Material m;
     public GameObject cam;
     Vector3 currentPosition;
+    public float targetTime = 10.0f;
+    GameObject shapeObject;
+    public GameObject timer;
+    public Text t;
     void Update()
     {
+        if (intersectionDetected)
+        {
+            if(targetTime <= 0.0f){
+                intersectionDetected = false;
+                Destroy(shapeObject); 
+                targetTime = 10.0f;
+                timer.SetActive(false);
+            }
+            else{
+                timer.SetActive(true);
+                t.text = targetTime.ToString("0");
+                targetTime -= Time.deltaTime;
+            }
+        }
         Debug.Log(currentPosition);
-        if (intersectionDetected) return; // Stop after first intersection
+        // if (intersectionDetected) return; // Stop after first intersection
 
         currentPosition = player.transform.position;
 
@@ -29,10 +48,13 @@ public class PathTo3DShape : MonoBehaviour
         int intersectionIndex = CheckSelfIntersection();
         if (intersectionIndex != -1)
         {
-            Debug.Log("Loop Detected!");
-            ExtractLoop(intersectionIndex);
-            Generate3DShape();
-            // intersectionDetected = true; // Prevent multiple shapes from being created
+            if(!intersectionDetected) {
+                Debug.Log("Loop Detected!");
+                ExtractLoop(intersectionIndex);
+                Generate3DShape();
+                intersectionDetected = true; // Prevent multiple shapes from being created
+                pastPositions.Clear();
+            }
         }
     }
 
@@ -79,7 +101,7 @@ public class PathTo3DShape : MonoBehaviour
 
     void Generate3DShape()
     {
-        GameObject shapeObject = new GameObject("3DLoopShape");
+        shapeObject = new GameObject("3DLoopShape");
         shapeObject.transform.position = Vector3.zero;
 
         MeshFilter meshFilter = shapeObject.AddComponent<MeshFilter>();
@@ -131,7 +153,7 @@ public class PathTo3DShape : MonoBehaviour
         Rigidbody rb = shapeObject.AddComponent<Rigidbody>();
         rb.useGravity = true;  // Enable gravity (you can disable it based on your need)
         rb.mass = 1;  
-        shapeObject.transform.position = new Vector3(currentPosition.x/24, 5f, currentPosition.z/24);
+        shapeObject.transform.position = new Vector3(currentPosition.x/1000, 5f, currentPosition.z/1000);
     }
 
     void TriangulateFace(List<int> triangles, Vector3[] vertices, int startIndex, int loopSize)
