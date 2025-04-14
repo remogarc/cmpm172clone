@@ -147,13 +147,13 @@ public class PathTo3DShape : MonoBehaviour
 
         meshFilter.mesh = mesh;
     // Add a MeshCollider to the shape to match the mesh
-        MeshCollider meshCollider = shapeObject.AddComponent<MeshCollider>();
-        meshCollider.sharedMesh = mesh; // Set the mesh for the collider
-        meshCollider.convex = true; // Set convex if you need physics interactions
+        BoxCollider meshCollider = shapeObject.AddComponent<BoxCollider>();
+        // meshCollider.sharedMesh = mesh; // Set the mesh for the collider
+        // meshCollider.convex = true; // Set convex if you need physics interactions
         Rigidbody rb = shapeObject.AddComponent<Rigidbody>();
         rb.useGravity = true;  // Enable gravity (you can disable it based on your need)
         rb.mass = 1;  
-        shapeObject.transform.position = new Vector3(currentPosition.x/1000, 5f, currentPosition.z/1000);
+        shapeObject.transform.position = new Vector3(currentPosition.x/1000, currentPosition.y + 5f, currentPosition.z/1000);
     }
 
     void TriangulateFace(List<int> triangles, Vector3[] vertices, int startIndex, int loopSize)
