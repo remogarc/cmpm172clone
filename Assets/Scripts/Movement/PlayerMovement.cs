@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpHeight = 100f;
 
     public bool is_player_grounded = true;
+    public bool can_jump_again = true;
     
     public float turn_smooth_time = 0.1f;
     float turn_smooth_velocity;
@@ -51,8 +52,9 @@ public class PlayerMovement : MonoBehaviour
         // Let the player jump if they're grounded
         if (Input.GetKeyDown(KeyCode.Space) && is_player_grounded == true)
         {
-            transform.Translate(new Vector3(0, jumpHeight, 0) * Time.deltaTime);
             is_player_grounded = false;
+            can_jump_again = false;
+            StartCoroutine(PlayerJump());
         }
 
     }
@@ -60,10 +62,19 @@ public class PlayerMovement : MonoBehaviour
     // Detect if player is grounded
     void OnControllerColliderHit(ControllerColliderHit other)
     {
-        if (other.gameObject.CompareTag("Terrain"))
+        if (other.gameObject.CompareTag("Terrain") && can_jump_again == true)
         {
             is_player_grounded = true;
         }
+    }
+
+    //Player jumps + 1 second jump cooldown
+    IEnumerator PlayerJump()
+    {
+        transform.Translate(new Vector3(0, jumpHeight, 0) * Time.deltaTime);
+        yield return new WaitForSeconds(1f);
+        can_jump_again = true;
+
     }
 
     void OnDeviceChange(InputDevice device, InputDeviceChange change)
