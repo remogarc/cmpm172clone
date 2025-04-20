@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
     public Transform cam;
 
     public float speed = 6f;
+
+    [SerializeField] float jumpHeight = 100f;
+
+    public bool is_player_grounded = true;
     
     public float turn_smooth_time = 0.1f;
     float turn_smooth_velocity;
@@ -43,7 +47,25 @@ public class PlayerMovement : MonoBehaviour
         else{
             hooman.ResetTrigger("walking");
         }
+
+        // Let the player jump if they're grounded
+        if (Input.GetKeyDown(KeyCode.Space) && is_player_grounded == true)
+        {
+            transform.Translate(new Vector3(0, jumpHeight, 0) * Time.deltaTime);
+            is_player_grounded = false;
+        }
+
     }
+
+    // Detect if player is grounded
+    void OnControllerColliderHit(ControllerColliderHit other)
+    {
+        if (other.gameObject.CompareTag("Terrain"))
+        {
+            is_player_grounded = true;
+        }
+    }
+
     void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
         if (change == InputDeviceChange.Added || change == InputDeviceChange.Reconnected)
