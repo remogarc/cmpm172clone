@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public Transform cam;
 
-    public float speed = 6f;
+    public float speed = 15f;
+    public float sprint_speed = 25f;
+    public float normal_speed = 15f;
 
     [SerializeField] float jumpHeight = 100f;
 
@@ -36,7 +38,19 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if(direction.magnitude >= 0.01f){
+        // Change move speed to sprint speed if LSHIFT is held
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = sprint_speed;
+        }
+
+        else
+        {
+            speed = normal_speed;
+        }
+
+        if(direction.magnitude >= 0.01f)
+        {
             hooman.SetTrigger("walking");
             float target_angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, target_angle, ref turn_smooth_velocity, turn_smooth_time);
@@ -45,7 +59,9 @@ public class PlayerMovement : MonoBehaviour
             Vector3 move_dir = Quaternion.Euler(0f, target_angle, 0.1f) * Vector3.forward;
             controller.Move(move_dir.normalized * speed * Time.deltaTime);
         }
-        else{
+
+        else
+        {
             hooman.ResetTrigger("walking");
         }
 
