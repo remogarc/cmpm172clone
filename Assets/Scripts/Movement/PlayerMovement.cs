@@ -8,7 +8,14 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public Transform cam;
 
-    public float speed = 6f;
+    public float speed = 15f;
+    public float sprint_speed = 25f;
+    public float normal_speed = 15f;
+
+    [SerializeField] float jumpHeight = 100f;
+
+    public bool is_player_grounded = true;
+    public bool can_jump_again = true;
     
     public float turn_smooth_time = 0.1f;
     float turn_smooth_velocity;
