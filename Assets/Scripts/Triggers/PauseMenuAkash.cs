@@ -61,6 +61,7 @@ public class PauseMenuAkash : MonoBehaviour
             if(Vector3.Distance(transform.position, targetPosition) < 0.01f){
                 escape = false;
                 mc.fieldOfView = 137.0f;
+                Time.timeScale = 0f;
             }
 
             main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, menu_cam.transform.position, speed * Time.deltaTime);
@@ -96,6 +97,7 @@ public class PauseMenuAkash : MonoBehaviour
         cb.enabled = true;
         escape = false;
         pause.SetActive(false);
+        Time.timeScale = 1f;
         mc.fieldOfView = 55.2f;
         grace_ui.SetActive(false);
         dm.grace = false;

@@ -19,6 +19,7 @@ public class PathTo3DShape : MonoBehaviour
     GameObject shapeObject;
     public GameObject timer;
     public Text t;
+    public PauseMenuAkash pma;
     void Update()
     {
         if (intersectionDetected)
@@ -30,9 +31,10 @@ public class PathTo3DShape : MonoBehaviour
                 timer.SetActive(false);
             }
             else{
+                if(pma.escape){ targetTime -= 0f;}
+                else{targetTime -= Time.deltaTime;}
                 timer.SetActive(true);
                 t.text = targetTime.ToString("0");
-                targetTime -= Time.deltaTime;
             }
         }
         // Debug.Log(currentPosition);
