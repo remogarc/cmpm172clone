@@ -83,6 +83,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    IEnumerator PlayerJump()
+    {
+        transform.Translate(new Vector3(0, jumpHeight, 0) * Time.deltaTime);
+        yield return new WaitForSeconds(1f);
+        can_jump_again = true;
+
+    }
     void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
         if (change == InputDeviceChange.Added || change == InputDeviceChange.Reconnected)
