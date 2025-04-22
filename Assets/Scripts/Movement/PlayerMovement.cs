@@ -15,7 +15,14 @@ public class PlayerMovement : MonoBehaviour
     public Animator hooman;
 
     public static bool ps5;
+    PlayerControls pc;
     // Start is called before the first frame update
+
+    private void Awake(){
+        pc = new PlayerControls();
+        pc.Gameplay.SelectPS5.performed += ctx => Sprint();
+        pc.Gameplay.SelectPS5.performed += ctx => Jump();
+    }
     void Start()
     {
         DetectController();
@@ -23,7 +30,14 @@ public class PlayerMovement : MonoBehaviour
         // Listen for device connection changes
         InputSystem.onDeviceChange += OnDeviceChange;
     }
-
+    public void Sprint(){
+        speed = sprint_speed;
+    }
+    public void Jump(){
+        is_player_grounded = false;
+        can_jump_again = false;
+        StartCoroutine(PlayerJump());
+    }
     // Update is called once per frame
     void Update()
     {
@@ -31,7 +45,19 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if(direction.magnitude >= 0.01f){
+        // Change move speed to sprint speed if LSHIFT is held
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            Sprint();
+        }
+
+        else
+        {
+            speed = normal_speed;
+        }
+
+        if(direction.magnitude >= 0.01f)
+        {
             hooman.SetTrigger("walking");
             float target_angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, target_angle, ref turn_smooth_velocity, turn_smooth_time);
@@ -43,6 +69,12 @@ public class PlayerMovement : MonoBehaviour
         else{
             hooman.ResetTrigger("walking");
         }
+        // Let the player jump if they're grounded
+        if (Input.GetKeyDown(KeyCode.Space) && is_player_grounded == true)
+        {
+            Jump();
+        }
+
     }
     void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
