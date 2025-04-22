@@ -21,10 +21,13 @@ public class PauseMenuAkash : MonoBehaviour
     public bool escape = false;
     public float speed = 20f;
     public GameObject pause;
+    public GameObject grace_ui;
     public GameObject option_back;
     public GameObject option_button;
     public GameObject camera_back;
     public GameObject camera_button;
+    public DetectionManager dm;
+
     bool triangle;
     PlayerControls pc;
     public Vector3 offset = new Vector3(0f, 10f, -20f); // how far up and back to move
@@ -59,6 +62,7 @@ public class PauseMenuAkash : MonoBehaviour
                 escape = false;
                 mc.fieldOfView = 137.0f;
             }
+
             main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, menu_cam.transform.position, speed * Time.deltaTime);
         }
         pos = player.transform.position;
@@ -68,15 +72,22 @@ public class PauseMenuAkash : MonoBehaviour
             // options.SetActive(false);
 
             // mouseValue = mouseSens.value;
+            if(dm.grace || dm.prompt_check){
+                return;
+            }
             cb.enabled = false;
             escape = true; 
             main_cam.transform.rotation = menu_cam.transform.rotation;
             // main_cam.transform.position = menu_cam.transform.position;
             pause.SetActive(true);
             pm.enabled = false;
+            EventSystem.current.SetSelectedGameObject(null); // Reset selection
+            EventSystem.current.firstSelectedGameObject = option_button;
+            EventSystem.current.SetSelectedGameObject(option_button); // Apply selection
             // Cursor.lockState = CursorLockMode.None;
             // Cursor.visible = true;
             // Time.timeScale = 0f;
+
         }    
     }
 
@@ -86,6 +97,17 @@ public class PauseMenuAkash : MonoBehaviour
         escape = false;
         pause.SetActive(false);
         mc.fieldOfView = 55.2f;
+        grace_ui.SetActive(false);
+        dm.grace = false;
+    }
+    public void BackButtonGrace(){
+        pm.enabled =true;
+        cb.enabled = true;
+        dm.grace = false;
+        escape = false;
+        pause.SetActive(false);
+        mc.fieldOfView = 55.2f;
+        grace_ui.SetActive(false);
     }
     public void BackButtonOptions(){
         options.SetActive(false);

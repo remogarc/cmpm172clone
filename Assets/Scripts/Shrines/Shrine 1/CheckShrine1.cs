@@ -9,6 +9,7 @@ public class CheckShrine1 : MonoBehaviour
     public bool complete = false;
     public GameObject big_text; 
     public Text t;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +19,8 @@ public class CheckShrine1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(t1.switch1 && t2.switch2){
-            complete = true;
-            big_text.SetActive(true);
-            t.text = "Shrine Complete";
-        }
+
     }
+
+
 }

@@ -110,6 +110,7 @@ public class Ink : MonoBehaviour {
             Graphics.Blit(widthSource, edgeSource);
         } else {
             Graphics.Blit(luminanceSource, edgeSource, inkMaterial, (int)edgeDetector);
+            // Graphics.Blit(widthSource, edgeSource);
         }
 
         RenderTexture stippleSource = RenderTexture.GetTemporary(width, height, 0, source.format);

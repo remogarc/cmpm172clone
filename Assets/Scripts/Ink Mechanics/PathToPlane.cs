@@ -35,7 +35,7 @@ public class PathTo3DShape : MonoBehaviour
                 targetTime -= Time.deltaTime;
             }
         }
-        Debug.Log(currentPosition);
+        // Debug.Log(currentPosition);
         // if (intersectionDetected) return; // Stop after first intersection
 
         currentPosition = player.transform.position;
@@ -49,7 +49,7 @@ public class PathTo3DShape : MonoBehaviour
         if (intersectionIndex != -1)
         {
             if(!intersectionDetected) {
-                Debug.Log("Loop Detected!");
+                // Debug.Log("Loop Detected!");
                 ExtractLoop(intersectionIndex);
                 Generate3DShape();
                 intersectionDetected = true; // Prevent multiple shapes from being created
@@ -96,7 +96,7 @@ public class PathTo3DShape : MonoBehaviour
         {
             closedLoop.Add(pastPositions[i]);
         }
-        Debug.Log("Loop extracted with " + closedLoop.Count + " points.");
+        // Debug.Log("Loop extracted with " + closedLoop.Count + " points.");
     }
 
     void Generate3DShape()
