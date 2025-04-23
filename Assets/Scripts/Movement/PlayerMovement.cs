@@ -8,27 +8,39 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public Transform cam;
 
-    public float speed = 15f;
+    public float speed = 20f;
     public float sprint_speed = 25f;
     public float normal_speed = 15f;
 
-    [SerializeField] float jumpHeight = 100f;
+    [SerializeField] float jumpHeight = 20f;
 
     public bool is_player_grounded = true;
     public bool can_jump_again = true;
-    
+    bool sprint_controller;
+
     public float turn_smooth_time = 0.1f;
     float turn_smooth_velocity;
     public Animator hooman;
 
     public static bool ps5;
+    public Vector3 velocity;
+    public float gravity = -9.81f;
     PlayerControls pc;
     // Start is called before the first frame update
-
     private void Awake(){
         pc = new PlayerControls();
-        pc.Gameplay.SelectPS5.performed += ctx => Sprint();
-        pc.Gameplay.SelectPS5.performed += ctx => Jump();
+        pc.Gameplay.JumpPS5.performed += ctx => Jump();
+        // pc.Gameplay.SprintPS5.performed += ctx => speed = sprint_speed;
+        // pc.Gameplay.SprintPS5.canceled += ctx => speed = normal_speed;
+        pc.Gameplay.SprintPS5.performed += ctx => sprint_controller = true;
+        pc.Gameplay.SprintPS5.canceled += ctx => sprint_controller = false;
+
+    }
+    void OnEnable() {
+        pc.Gameplay.Enable();
+    }
+    void OnDisable(){
+        pc.Gameplay.Disable();
     }
     void Start()
     {
@@ -37,10 +49,9 @@ public class PlayerMovement : MonoBehaviour
         // Listen for device connection changes
         InputSystem.onDeviceChange += OnDeviceChange;
     }
-    public void Sprint(){
-        speed = sprint_speed;
+    void Sprint(){
     }
-    public void Jump(){
+    void Jump(){
         is_player_grounded = false;
         can_jump_again = false;
         StartCoroutine(PlayerJump());
@@ -48,14 +59,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(speed);
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         // Change move speed to sprint speed if LSHIFT is held
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) || sprint_controller)
         {
-            Sprint();
+            speed = sprint_speed;
         }
 
         else
@@ -73,27 +85,22 @@ public class PlayerMovement : MonoBehaviour
             Vector3 move_dir = Quaternion.Euler(0f, target_angle, 0.1f) * Vector3.forward;
             controller.Move(move_dir.normalized * speed * Time.deltaTime);
         }
-        else{
+
+        else
+        {
             hooman.ResetTrigger("walking");
         }
+        velocity.y +=gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+
         // Let the player jump if they're grounded
         if (Input.GetKeyDown(KeyCode.Space) && is_player_grounded == true)
         {
-            Debug.Log("Jumping!");
             Jump();
         }
-        else{
-            Debug.Log("Can't jump");
-        }
 
     }
-    IEnumerator PlayerJump()
-    {
-        transform.Translate(new Vector3(0, jumpHeight, 0) * Time.deltaTime);
-        yield return new WaitForSeconds(5f);
-        can_jump_again = true;
 
-    }
     // Detect if player is grounded
     void OnControllerColliderHit(ControllerColliderHit other)
     {
@@ -102,6 +109,17 @@ public class PlayerMovement : MonoBehaviour
             is_player_grounded = true;
         }
     }
+
+    //Player jumps + 1 second jump cooldown
+    IEnumerator PlayerJump()
+    {
+        Debug.Log("start jump");
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        yield return new WaitForSeconds(1f);
+        can_jump_again = true;
+
+    }
+
     void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
         if (change == InputDeviceChange.Added || change == InputDeviceChange.Reconnected)

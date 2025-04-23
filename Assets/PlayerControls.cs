@@ -44,6 +44,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""JumpPS5"",
+                    ""type"": ""Button"",
+                    ""id"": ""698edd56-5619-4394-927c-b4f8bfd5365b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SprintPS5"",
+                    ""type"": ""Button"",
+                    ""id"": ""cdce6b5c-ef85-4d6e-baee-e9bcb8a098e7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -61,11 +79,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""af708feb-f3d5-4686-bf5a-405378d3bd9f"",
-                    ""path"": ""<DualShockGamepad>/buttonNorth"",
+                    ""path"": ""<DualShockGamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""EscapePS5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30d7492d-6f3f-4036-b664-7f861b417a16"",
+                    ""path"": ""<DualShockGamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpPS5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c24c12c6-2284-4e15-98b1-d5e18c88e4b8"",
+                    ""path"": ""<DualShockGamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SprintPS5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -78,6 +118,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_SelectPS5 = m_Gameplay.FindAction("SelectPS5", throwIfNotFound: true);
         m_Gameplay_EscapePS5 = m_Gameplay.FindAction("EscapePS5", throwIfNotFound: true);
+        m_Gameplay_JumpPS5 = m_Gameplay.FindAction("JumpPS5", throwIfNotFound: true);
+        m_Gameplay_SprintPS5 = m_Gameplay.FindAction("SprintPS5", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -146,12 +188,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_SelectPS5;
     private readonly InputAction m_Gameplay_EscapePS5;
+    private readonly InputAction m_Gameplay_JumpPS5;
+    private readonly InputAction m_Gameplay_SprintPS5;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @SelectPS5 => m_Wrapper.m_Gameplay_SelectPS5;
         public InputAction @EscapePS5 => m_Wrapper.m_Gameplay_EscapePS5;
+        public InputAction @JumpPS5 => m_Wrapper.m_Gameplay_JumpPS5;
+        public InputAction @SprintPS5 => m_Wrapper.m_Gameplay_SprintPS5;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -167,6 +213,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @EscapePS5.started += instance.OnEscapePS5;
             @EscapePS5.performed += instance.OnEscapePS5;
             @EscapePS5.canceled += instance.OnEscapePS5;
+            @JumpPS5.started += instance.OnJumpPS5;
+            @JumpPS5.performed += instance.OnJumpPS5;
+            @JumpPS5.canceled += instance.OnJumpPS5;
+            @SprintPS5.started += instance.OnSprintPS5;
+            @SprintPS5.performed += instance.OnSprintPS5;
+            @SprintPS5.canceled += instance.OnSprintPS5;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -177,6 +229,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @EscapePS5.started -= instance.OnEscapePS5;
             @EscapePS5.performed -= instance.OnEscapePS5;
             @EscapePS5.canceled -= instance.OnEscapePS5;
+            @JumpPS5.started -= instance.OnJumpPS5;
+            @JumpPS5.performed -= instance.OnJumpPS5;
+            @JumpPS5.canceled -= instance.OnJumpPS5;
+            @SprintPS5.started -= instance.OnSprintPS5;
+            @SprintPS5.performed -= instance.OnSprintPS5;
+            @SprintPS5.canceled -= instance.OnSprintPS5;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -198,5 +256,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnSelectPS5(InputAction.CallbackContext context);
         void OnEscapePS5(InputAction.CallbackContext context);
+        void OnJumpPS5(InputAction.CallbackContext context);
+        void OnSprintPS5(InputAction.CallbackContext context);
     }
 }
