@@ -3155,6 +3155,11 @@ MonoBehaviour:
   controller: {fileID: 423628590}
   cam: {fileID: 963194228}
   speed: 25
+  sprint_speed: 42.5
+  normal_speed: 24.3
+  jumpHeight: 107.5
+  is_player_grounded: 1
+  can_jump_again: 1
   turn_smooth_time: 0.1
   hooman: {fileID: 423628591}
 --- !u!114 &423628593
@@ -14280,7 +14285,7 @@ GameObject:
   - component: {fileID: 1165047522}
   m_Layer: 0
   m_Name: Shrinelol
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
