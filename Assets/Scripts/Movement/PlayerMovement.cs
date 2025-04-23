@@ -8,11 +8,11 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public Transform cam;
 
-    public float speed = 15f;
+    public float speed = 20f;
     public float sprint_speed = 25f;
     public float normal_speed = 15f;
 
-    [SerializeField] float jumpHeight = 100f;
+    [SerializeField] float jumpHeight = 20f;
 
     public bool is_player_grounded = true;
     public bool can_jump_again = true;
@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator hooman;
 
     public static bool ps5;
+    public Vector3 velocity;
+    public float gravity = -9.81f;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +66,8 @@ public class PlayerMovement : MonoBehaviour
         {
             hooman.ResetTrigger("walking");
         }
+        velocity.y +=gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
 
         // Let the player jump if they're grounded
         if (Input.GetKeyDown(KeyCode.Space) && is_player_grounded == true)
@@ -87,7 +91,8 @@ public class PlayerMovement : MonoBehaviour
     //Player jumps + 1 second jump cooldown
     IEnumerator PlayerJump()
     {
-        transform.Translate(new Vector3(0, jumpHeight, 0) * Time.deltaTime);
+        Debug.Log("start jump");
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         yield return new WaitForSeconds(1f);
         can_jump_again = true;
 
