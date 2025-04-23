@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         // Check if the player is moving
-        bool isMoving = direction.magnitude >= 0.01f;
+        bool isMoving = direction.magnitude > 0f;
 
         // Update the Animator parameter
         hooman.SetBool("walking", isMoving);
