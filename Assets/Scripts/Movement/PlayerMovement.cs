@@ -79,7 +79,11 @@ public class PlayerMovement : MonoBehaviour
         // Let the player jump if they're grounded
         if (Input.GetKeyDown(KeyCode.Space) && is_player_grounded == true)
         {
+            Debug.Log("Jumping!");
             Jump();
+        }
+        else{
+            Debug.Log("Can't jump");
         }
 
     }
