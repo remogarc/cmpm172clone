@@ -12,7 +12,7 @@ public class DetectionManager : MonoBehaviour
     // If we want to search for a specific layer of objects so not everything is being searched, we use this.
     [SerializeField] private LayerMask detectionLayer; 
     PlayerControls pc;
-    public PlayerMovement pm;
+    public PlayerMovementAlt pm;
     public LostGrace lg;
     public GameObject grace_text;
     public Camera mc;
@@ -26,6 +26,7 @@ public class DetectionManager : MonoBehaviour
     public PauseMenuAkash pma; 
     public Prompt p;
     public Location l;
+    public CompleteShrine cs;
 
     private void Awake(){
         pc = new PlayerControls();
@@ -60,13 +61,14 @@ public class DetectionManager : MonoBehaviour
             // Sets collider as an object reference
             GameObject obj = collider.gameObject;
             //Debug.Log("Hit: " + obj);
-            // Debug.Log(obj.tag);
-            // Debug.Log(obj.name);
+            Debug.Log(obj.tag);
+            Debug.Log(obj.name);
             // Returns true/false as it calls a function to compare the object's tag, will follow through if true.
             if (MatchesTag(obj))
             {
                 // Debug.Log(obj.tag);
                 if(obj.tag == "Grace" && pma.escape == false && prompt_check == false){
+                    Debug.Log("23940oefijsodijflksdjf");
                     grace = true;
                     if(!lg.discovered_wells.Contains(obj.name)){
                         lg.discovered_wells.Add(obj.name);
@@ -99,9 +101,19 @@ public class DetectionManager : MonoBehaviour
                     Debug.Log("JENKINSSSSSSSS!");
                     //pause the player script
                     prompt.SetActive(true);
+                    pm.enabled = false;
                     prompt_check = true; 
                     Debug.Log(obj.name);
                     l.shrine_passed = obj.name;
+                }
+                else if(obj.tag == "Exit" && pma.escape == false && grace == false){
+                    Debug.Log("3049-sdfsjdlfkjlskdfj");
+                    if(!prompt.activeSelf){
+                        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+                        EventSystem.current.firstSelectedGameObject = yes_button;
+                        EventSystem.current.SetSelectedGameObject(yes_button); // Apply selection
+                    }
+                    cs.exit_shrine();
                 }
                 // else if(obj.tag == "Stations"){
                 //     Debug.Log("found a station. ");
@@ -128,8 +140,12 @@ public class DetectionManager : MonoBehaviour
                 // If the script on the object does exist, do the thing
                 if (interaction != null)
                 {
+
                     // Debug.Log("Call interactor");
                     interaction.Interact(); // Call the interactionhandler's interact function
+                    if(obj.name == "diary"){
+                        cs.finish_shrine();
+                    }
                 }
                 else{
                     Debug.Log(interaction);
@@ -150,6 +166,8 @@ public class DetectionManager : MonoBehaviour
             case "Stations":
             case "Grace":
             case "Shrine":
+            case "diary":
+            case "Exit":
                 return true; // Accept any matching tags
                 Debug.Log("found something");
             default:

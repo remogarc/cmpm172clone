@@ -105,7 +105,8 @@ public class PathTo3DShape : MonoBehaviour
     {
         shapeObject = new GameObject("3DLoopShape");
         shapeObject.transform.position = Vector3.zero;
-
+        shapeObject.tag = "Terrain";
+        
         MeshFilter meshFilter = shapeObject.AddComponent<MeshFilter>();
         MeshRenderer meshRenderer = shapeObject.AddComponent<MeshRenderer>();
         meshRenderer.material = m;

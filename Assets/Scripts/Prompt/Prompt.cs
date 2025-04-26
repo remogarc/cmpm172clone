@@ -6,6 +6,7 @@ public class Prompt : MonoBehaviour
 {
     public bool y = false; 
     public bool n = false;
+    public int count = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class Prompt : MonoBehaviour
     public void yes_pressed(){
         y = true; 
         n = false; 
+        count+=1;
         Debug.Log("y is now: " + y);
     }
     public void no_pressed(){

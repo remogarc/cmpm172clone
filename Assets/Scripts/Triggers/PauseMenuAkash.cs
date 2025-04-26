@@ -12,7 +12,7 @@ public class PauseMenuAkash : MonoBehaviour
     // public GameObject pause;
     public GameObject options;
     public GameObject camera;
-    public PlayerMovement pm; 
+    public PlayerMovementAlt pm; 
     public GameObject player; 
     public Vector3 pos;
     public CinemachineBrain cb;    // public Slider mouseSens;
@@ -27,7 +27,8 @@ public class PauseMenuAkash : MonoBehaviour
     public GameObject camera_back;
     public GameObject camera_button;
     public DetectionManager dm;
-
+    public Fader f; 
+    
     bool triangle;
     PlayerControls pc;
     public Vector3 offset = new Vector3(0f, 10f, -20f); // how far up and back to move
@@ -150,6 +151,9 @@ public class PauseMenuAkash : MonoBehaviour
     public void SaveGame(){
         SaveSystem.SavePlayer(player.transform.position);
         Debug.Log("saved.");
+    }
+    public void StartGame(){
+        f.FadeToLevel("Overworld");
     }
     public void LoadGame(){
         PlayerData data = SaveSystem.LoadPlayer();

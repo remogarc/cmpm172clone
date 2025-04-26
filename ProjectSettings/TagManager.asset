@@ -8,6 +8,8 @@ TagManager:
   - Grace
   - Shrine
   - Terrain
+  - diary
+  - Exit
   layers:
   - Default
   - TransparentFX

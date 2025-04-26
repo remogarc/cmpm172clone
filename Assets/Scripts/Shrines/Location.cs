@@ -16,6 +16,9 @@ public class Location : MonoBehaviour
     public Prompt p;
     public GameObject y_n_prompt;
     public string shrine_passed = "none"; 
+    public PauseMenuAkash pma;
+    public PlayerMovementAlt pm;
+    public Fader f;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,13 +51,21 @@ public class Location : MonoBehaviour
     public void trigger_shrine(string shrine_name){
         Debug.Log("yes is " + p.y);
         Debug.Log("no is " + p.n);
-        if(p.y){
-
+        if(p.y && p.count >= 1){
+            p.count = 0;
             Debug.Log("Trigger Shrine");
             p.y = false; 
             p.n = false;
             y_n_prompt.SetActive(false);
-            SceneManager.LoadScene(shrine_name);
+            pma.SaveGame();
+            f.FadeToLevel(shrine_name);
+        }
+        else if(p.n){
+            pm.enabled = true; 
+            p.count = 0;
+            p.y = false; 
+            p.n = false;
+            y_n_prompt.SetActive(false);
         }
     }
 }

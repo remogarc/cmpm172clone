@@ -48,7 +48,7 @@ public class InteractionHandler : MonoBehaviour
     public GameObject dialogue_camera;
     public GameObject main_cam;
     public CinemachineBrain cb;    // public Slider mouseSens;
-    public PlayerMovement pm; 
+    public PlayerMovementAlt pm; 
 
     // public AudioSource source;
     // public AudioClip clip;
@@ -210,7 +210,7 @@ public class InteractionHandler : MonoBehaviour
     IEnumerator TypeSentence(string sentence){
         dialogueText.text = "";
         foreach(char i in sentence.ToCharArray()){
-            dialogueText.text += i; 
+            dialogueText.text +=i; 
             yield return null;
         }
     }
