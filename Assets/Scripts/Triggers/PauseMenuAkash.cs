@@ -74,12 +74,11 @@ public class PauseMenuAkash : MonoBehaviour
         pm.enabled =true;
         cb.enabled = true;
         escape = false;
-        pause.SetActive(false);
+        ResetTriggers(pause);
     }
     public void BackButtonOptions(){
-        options.SetActive(false);
+        ResetTriggers(options);
         pause.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = option_button;
         EventSystem.current.SetSelectedGameObject(option_button); // Apply selection
     }
@@ -89,7 +88,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
 
     public void OptionsButtonPause(){
-        pause.SetActive(false);
+        ResetTriggers(pause);
         options.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = option_back;
@@ -107,8 +106,23 @@ public class PauseMenuAkash : MonoBehaviour
         pm.enabled =true;
         cb.enabled = true;
         escape = false;
-        pause.SetActive(false);
+        ResetTriggers(pause);
         player.transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
         Debug.Log(player.transform.position); 
+    }
+
+    private void ResetTriggers(GameObject menu) {
+        Animator[] animators = menu.GetComponentsInChildren<Animator>(true);
+
+        foreach (Animator animator in animators)
+        {
+            animator.Play("Normal", 0, 0f);
+        }
+
+        StartCoroutine(DelayedDeactivate(menu));
+    }
+    IEnumerator DelayedDeactivate(GameObject menu) {
+        yield return null; // Wait one frame
+        menu.SetActive(false);
     }
 }
