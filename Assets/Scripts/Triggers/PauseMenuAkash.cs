@@ -11,7 +11,11 @@ public class PauseMenuAkash : MonoBehaviour
 
     // public GameObject pause;
     public GameObject options;
-    public PlayerMovement pm; 
+    public GameObject camera;
+    public GameObject audio;
+    public GameObject lang;
+    public GameObject control;
+    public PlayerMovementAlt pm; 
     public GameObject player; 
     public Vector3 pos;
     public CinemachineBrain cb;    // public Slider mouseSens;
@@ -20,10 +24,27 @@ public class PauseMenuAkash : MonoBehaviour
     public bool escape = false;
     public float speed = 20f;
     public GameObject pause;
+    public GameObject grace_ui;
     public GameObject option_back;
     public GameObject option_button;
+    public GameObject camera_back;
+    public GameObject camera_button;
+    public GameObject audio_back;
+    public GameObject audio_button;
+    public GameObject lang_back;
+    public GameObject lang_button;
+    public GameObject control_back;
+    public GameObject control_button;
+    public DetectionManager dm;
+    public Fader f;
+    private bool NoSubMenusActive = true;
+
     bool triangle;
     PlayerControls pc;
+    public Vector3 offset = new Vector3(0f, 10f, -20f); // how far up and back to move
+    private Vector3 targetPosition;
+    public Camera mc;    
+
     // public float mouseValue;
     // public int test;=
     void Awake(){
@@ -42,31 +63,43 @@ public class PauseMenuAkash : MonoBehaviour
     {
         // pause.SetActive(false);
         // mouseValue = mouseSens.value;
+        targetPosition = transform.position + offset;
     }
     // Update is called once per frame
     void Update()
     {
         if(escape){
-            if(main_cam.transform.position.x <= -80f){
+            if(Vector3.Distance(transform.position, targetPosition) < 0.01f){
                 escape = false;
+                mc.fieldOfView = 137.0f;
+                Time.timeScale = 0f;
             }
-            main_cam.transform.position += menu_cam.transform.position.normalized * speed * Time.deltaTime;
+
+            main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, menu_cam.transform.position, speed * Time.deltaTime);
         }
         pos = player.transform.position;
-        if(Input.GetKeyDown(KeyCode.Escape) || triangle)
+        if((Input.GetKeyDown(KeyCode.Escape) || triangle) && NoSubMenusActive)
         {
             // pause.SetActive(true);
             // options.SetActive(false);
 
             // mouseValue = mouseSens.value;
+            if(dm.grace || dm.prompt_check){
+                return;
+            }
             cb.enabled = false;
             escape = true; 
             main_cam.transform.rotation = menu_cam.transform.rotation;
+            // main_cam.transform.position = menu_cam.transform.position;
             pause.SetActive(true);
             pm.enabled = false;
+            EventSystem.current.SetSelectedGameObject(null); // Reset selection
+            EventSystem.current.firstSelectedGameObject = option_button;
+            EventSystem.current.SetSelectedGameObject(option_button); // Apply selection
             // Cursor.lockState = CursorLockMode.None;
             // Cursor.visible = true;
             // Time.timeScale = 0f;
+
         }    
     }
 
@@ -75,6 +108,19 @@ public class PauseMenuAkash : MonoBehaviour
         cb.enabled = true;
         escape = false;
         pause.SetActive(false);
+        Time.timeScale = 1f;
+        mc.fieldOfView = 55.2f;
+        grace_ui.SetActive(false);
+        dm.grace = false;
+    }
+    public void BackButtonGrace(){
+        pm.enabled =true;
+        cb.enabled = true;
+        dm.grace = false;
+        escape = false;
+        pause.SetActive(false);
+        mc.fieldOfView = 55.2f;
+        grace_ui.SetActive(false);
     }
     public void BackButtonOptions(){
         options.SetActive(false);
@@ -82,6 +128,43 @@ public class PauseMenuAkash : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = option_button;
         EventSystem.current.SetSelectedGameObject(option_button); // Apply selection
+        NoSubMenusActive = true;
+    }
+    public void BackButtonCamera()
+    {
+        camera.SetActive(false);
+        options.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = camera_button;
+        EventSystem.current.SetSelectedGameObject(camera_button); // Apply selection
+        NoSubMenusActive = true;
+    }
+    public void BackButtonAudio()
+    {
+        audio.SetActive(false);
+        options.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = audio_button;
+        EventSystem.current.SetSelectedGameObject(audio_button); // Apply selection
+        NoSubMenusActive = true;
+    }
+    public void BackButtonLang()
+    {
+        lang.SetActive(false);
+        options.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = lang_button;
+        EventSystem.current.SetSelectedGameObject(lang_button); // Apply selection
+        NoSubMenusActive = true;
+    }
+    public void BackButtonControl()
+    {
+        control.SetActive(false);
+        options.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = control_button;
+        EventSystem.current.SetSelectedGameObject(control_button); // Apply selection
+        NoSubMenusActive = true;
     }
 
     public void ExitButtonPause(){
@@ -94,10 +177,51 @@ public class PauseMenuAkash : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = option_back;
         EventSystem.current.SetSelectedGameObject(option_back); // Apply selection
+        NoSubMenusActive = false;
     }
+    public void CameraButtonPause()
+    {
+        options.SetActive(false);
+        camera.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = camera_back;
+        EventSystem.current.SetSelectedGameObject(camera_back); // Apply selection
+        NoSubMenusActive = false;
+    }
+    public void AudioButtonPause()
+    {
+        options.SetActive(false);
+        audio.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = audio_back;
+        EventSystem.current.SetSelectedGameObject(audio_back); // Apply selection
+        NoSubMenusActive = false;
+    }
+    public void LangButtonPause()
+    {
+        options.SetActive(false);
+        lang.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = lang_back;
+        EventSystem.current.SetSelectedGameObject(lang_back); // Apply selection
+        NoSubMenusActive = false;
+    }
+    public void ControlButtonPause()
+    {
+        options.SetActive(false);
+        control.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); // Reset selection
+        EventSystem.current.firstSelectedGameObject = control_back;
+        EventSystem.current.SetSelectedGameObject(control_back); // Apply selection
+        NoSubMenusActive = false;
+    }
+
     public void SaveGame(){
         SaveSystem.SavePlayer(player.transform.position);
         Debug.Log("saved.");
+    }
+    public void StartGame(){
+        f.FadeToLevel("Overworld");
     }
     public void LoadGame(){
         PlayerData data = SaveSystem.LoadPlayer();

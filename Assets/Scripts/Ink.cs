@@ -110,6 +110,7 @@ public class Ink : MonoBehaviour {
             Graphics.Blit(widthSource, edgeSource);
         } else {
             Graphics.Blit(luminanceSource, edgeSource, inkMaterial, (int)edgeDetector);
+            // Graphics.Blit(widthSource, edgeSource);
         }
 
         RenderTexture stippleSource = RenderTexture.GetTemporary(width, height, 0, source.format);
@@ -132,22 +133,5 @@ public class Ink : MonoBehaviour {
      }
 
      private void LateUpdate() {
-        if (capturing || Input.GetKeyDown(KeyCode.Space)) {
-            int width = useImage ? image.width : 600;
-            int height = useImage ? image.height : 600;
-
-            RenderTexture rt = new RenderTexture(width, height, 24);
-            GetComponent<Camera>().targetTexture = rt;
-            Texture2D screenshot = new Texture2D(width, height, TextureFormat.RGB24, false);
-            GetComponent<Camera>().Render();
-            RenderTexture.active = rt;
-            screenshot.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-            GetComponent<Camera>().targetTexture = null;
-            RenderTexture.active = null;
-            Destroy(rt);
-            //string filename = string.Format("{0}/../Recordings/{1:000000}.png", Application.dataPath, frameCount);
-            string filename = string.Format("{0}/../Recordings/snap_{1}.png", Application.dataPath, System.DateTime.Now.ToString("HH-mm-ss"));
-            System.IO.File.WriteAllBytes(filename, screenshot.EncodeToPNG());
-        }
     }
 }

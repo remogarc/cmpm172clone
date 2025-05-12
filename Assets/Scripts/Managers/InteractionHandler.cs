@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 
 public class InteractionHandler : MonoBehaviour
@@ -44,6 +45,10 @@ public class InteractionHandler : MonoBehaviour
     private bool skip = false;
     // Reference that tracks the current line of dialogue
     private int currentLineIndex = 0;
+    public GameObject dialogue_camera;
+    public GameObject main_cam;
+    public CinemachineBrain cb;    // public Slider mouseSens;
+    public PlayerMovementAlt pm; 
 
     // public AudioSource source;
     // public AudioClip clip;
@@ -101,6 +106,16 @@ public class InteractionHandler : MonoBehaviour
             else{
                 Debug.Log("answer is " + c.ans);
             } 
+        }
+        if(chatBoxPrefab.activeSelf){
+                // if(Vector3.Distance(transform.position, targetPosition) < 0.01f){
+                //     escape = false;
+                //     mc.fieldOfView = 137.0f;
+                // }
+                cb.enabled = false;
+                main_cam.transform.rotation = dialogue_camera.transform.rotation;
+                pm.enabled = false;
+                main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, dialogue_camera.transform.position, 10f * Time.deltaTime);
         }
   
     }
@@ -195,13 +210,15 @@ public class InteractionHandler : MonoBehaviour
     IEnumerator TypeSentence(string sentence){
         dialogueText.text = "";
         foreach(char i in sentence.ToCharArray()){
-            dialogueText.text += i; 
+            dialogueText.text +=i; 
             yield return null;
         }
     }
     void EndDialogue(){
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        cb.enabled = true;
+        pm.enabled = true;
         dialogueLines.Clear();
         dialogueOptions.Clear();
         dialogueName.text ="";

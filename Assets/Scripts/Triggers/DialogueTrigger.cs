@@ -17,7 +17,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         isTriggered = Physics.CheckSphere(dialogueSphere.position, dialogueDistance, mask);
         if(isTriggered && enabled){
-            if(PlayerMovement.ps5){
+            if(PlayerMovementAlt.ps5){
                 ps5_selector.SetActive(true);
             }
             else{
