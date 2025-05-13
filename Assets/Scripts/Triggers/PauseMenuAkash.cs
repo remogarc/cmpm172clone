@@ -107,11 +107,11 @@ public class PauseMenuAkash : MonoBehaviour
         pm.enabled =true;
         cb.enabled = true;
         escape = false;
-        pause.SetActive(false);
         Time.timeScale = 1f;
         mc.fieldOfView = 55.2f;
         grace_ui.SetActive(false);
         dm.grace = false;
+        ResetTriggers(pause);
     }
     public void BackButtonGrace(){
         pm.enabled =true;
@@ -123,7 +123,7 @@ public class PauseMenuAkash : MonoBehaviour
         grace_ui.SetActive(false);
     }
     public void BackButtonOptions(){
-        options.SetActive(false);
+        ResetTriggers(options);
         pause.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = option_button;
@@ -132,7 +132,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
     public void BackButtonCamera()
     {
-        camera.SetActive(false);
+        ResetTriggers(camera);
         options.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = camera_button;
@@ -141,7 +141,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
     public void BackButtonAudio()
     {
-        audio.SetActive(false);
+        ResetTriggers(audio);
         options.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = audio_button;
@@ -150,7 +150,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
     public void BackButtonLang()
     {
-        lang.SetActive(false);
+        ResetTriggers(lang);
         options.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = lang_button;
@@ -159,7 +159,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
     public void BackButtonControl()
     {
-        control.SetActive(false);
+        ResetTriggers(control);
         options.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = control_button;
@@ -172,7 +172,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
 
     public void OptionsButtonPause(){
-        pause.SetActive(false);
+        ResetTriggers(pause);
         options.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = option_back;
@@ -181,7 +181,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
     public void CameraButtonPause()
     {
-        options.SetActive(false);
+        ResetTriggers(options);
         camera.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = camera_back;
@@ -190,7 +190,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
     public void AudioButtonPause()
     {
-        options.SetActive(false);
+        ResetTriggers(options);
         audio.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = audio_back;
@@ -199,7 +199,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
     public void LangButtonPause()
     {
-        options.SetActive(false);
+        ResetTriggers(options);
         lang.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = lang_back;
@@ -208,7 +208,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
     public void ControlButtonPause()
     {
-        options.SetActive(false);
+        ResetTriggers(options);
         control.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = control_back;
@@ -231,8 +231,25 @@ public class PauseMenuAkash : MonoBehaviour
         pm.enabled =true;
         cb.enabled = true;
         escape = false;
-        pause.SetActive(false);
+        ResetTriggers(pause);
         player.transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
         Debug.Log(player.transform.position); 
+    }
+
+    private void ResetTriggers(GameObject menu)
+    {
+        Animator[] animators = menu.GetComponentsInChildren<Animator>(true);
+
+        foreach (Animator animator in animators)
+        {
+            animator.Play("Normal", 0, 0f);
+        }
+
+        StartCoroutine(DelayedDeactivate(menu));
+    }
+    IEnumerator DelayedDeactivate(GameObject menu)
+    {
+        yield return null; // Wait one frame
+        menu.SetActive(false);
     }
 }
