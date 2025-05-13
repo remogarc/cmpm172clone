@@ -137,7 +137,7 @@ public class PauseMenuAkash : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = camera_button;
         EventSystem.current.SetSelectedGameObject(camera_button); // Apply selection
-        NoSubMenusActive = true;
+        NoSubMenusActive = false;
     }
     public void BackButtonAudio()
     {
@@ -146,7 +146,7 @@ public class PauseMenuAkash : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = audio_button;
         EventSystem.current.SetSelectedGameObject(audio_button); // Apply selection
-        NoSubMenusActive = true;
+        NoSubMenusActive = false;
     }
     public void BackButtonLang()
     {
@@ -155,7 +155,7 @@ public class PauseMenuAkash : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = lang_button;
         EventSystem.current.SetSelectedGameObject(lang_button); // Apply selection
-        NoSubMenusActive = true;
+        NoSubMenusActive = false;
     }
     public void BackButtonControl()
     {
@@ -164,7 +164,7 @@ public class PauseMenuAkash : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null); // Reset selection
         EventSystem.current.firstSelectedGameObject = control_button;
         EventSystem.current.SetSelectedGameObject(control_button); // Apply selection
-        NoSubMenusActive = true;
+        NoSubMenusActive = false;
     }
 
     public void ExitButtonPause(){
