@@ -9654,7 +9654,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -9727,7 +9727,7 @@ MonoBehaviour:
   inkTexture: {fileID: 2800000, guid: f19046f848807454b9de476f3f4844bb, type: 3}
   image: {fileID: 2800000, guid: 0480cae2f59180e49a19852f2c3e4f3a, type: 3}
   useImage: 0
-  blueNoise: {fileID: 2800000, guid: e7ec7991425680f4ea623c9b8eb2f60f, type: 3}
+  blueNoise: {fileID: 0}
   edgeDetector: 10
   contrastThreshold: 0.01
   highThreshold: 0.76
@@ -33297,6 +33297,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   options: {fileID: 772962536}
   camera: {fileID: 1502496110}
+  audio: {fileID: 0}
+  lang: {fileID: 0}
+  control: {fileID: 0}
   pm: {fileID: 423628594}
   player: {fileID: 423628588}
   pos: {x: 0, y: 0, z: 0}
@@ -33311,6 +33314,12 @@ MonoBehaviour:
   option_button: {fileID: 574100546}
   camera_back: {fileID: 1845339061}
   camera_button: {fileID: 1308565383}
+  audio_back: {fileID: 0}
+  audio_button: {fileID: 0}
+  lang_back: {fileID: 0}
+  lang_button: {fileID: 0}
+  control_back: {fileID: 0}
+  control_button: {fileID: 0}
   dm: {fileID: 423628593}
   f: {fileID: 977583450}
   offset: {x: 0, y: 10, z: -20}
