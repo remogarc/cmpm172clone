@@ -23,6 +23,11 @@ public class Options : MonoBehaviour
 
     public Text currentFOV;
     public Slider fov;
+
+    public Slider musicVolumeSlider;
+    public Text currentVolumeText;
+    public AudioSource musicSource;
+
     private void Awake(){
         Camera.main.gameObject.TryGetComponent<CinemachineBrain>(out var brain);
         if(brain == null){
@@ -45,6 +50,12 @@ public class Options : MonoBehaviour
         if(camera.m_YAxis.m_InvertInput){
             y.isOn = true;
         }
+
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        musicSource.volume = musicVolumeSlider.value;
+        currentVolumeText.text = (musicVolumeSlider.value * 100f).ToString("0");
+
+        musicVolumeSlider.onValueChanged.AddListener(ChangeMusicVolume);
     }
 
 
@@ -68,5 +79,12 @@ public class Options : MonoBehaviour
 
     public void invertYAxis(){
         camera.m_YAxis.m_InvertInput = y.isOn ? true : false;
+    }
+
+    public void ChangeMusicVolume(float volume)
+    {
+        musicSource.volume = volume;
+        currentVolumeText.text = (volume * 100f).ToString("0");
+        PlayerPrefs.SetFloat("MusicVolume", volume);
     }
 }
