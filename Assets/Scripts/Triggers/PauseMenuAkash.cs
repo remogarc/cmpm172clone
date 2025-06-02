@@ -16,6 +16,7 @@ public class PauseMenuAkash : MonoBehaviour
     public GameObject lang;
     public GameObject control;
     public PlayerMovementAlt pm; 
+    public PlayerMovementAcc pmacc; 
     public GameObject player; 
     public Vector3 pos;
     public CinemachineBrain cb;    // public Slider mouseSens;
@@ -38,6 +39,8 @@ public class PauseMenuAkash : MonoBehaviour
     public DetectionManager dm;
     public Fader f;
     private bool NoSubMenusActive = true;
+    public bool acc_mode = false;
+    public Toggle acc_mode_toggle;
 
     bool triangle;
     PlayerControls pc;
@@ -80,7 +83,7 @@ public class PauseMenuAkash : MonoBehaviour
             main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, menu_cam.transform.position, speed * Time.deltaTime);
         }
         pos = player.transform.position;
-        if((Input.GetKeyDown(KeyCode.Escape) || triangle) && NoSubMenusActive)
+        if((Input.GetKeyDown(KeyCode.Escape) || triangle || Input.GetKeyDown(KeyCode.Mouse4)) && NoSubMenusActive)
         {
             // pause.SetActive(true);
             // options.SetActive(false);
@@ -94,8 +97,12 @@ public class PauseMenuAkash : MonoBehaviour
             main_cam.transform.rotation = menu_cam.transform.rotation;
             // main_cam.transform.position = menu_cam.transform.position;
             pause.SetActive(true);
-            pm.enabled = false;
-            EventSystem.current.SetSelectedGameObject(null); // Reset selection
+            if(acc_mode){
+                pmacc.enabled = false;
+            }
+            else{
+                pm.enabled = false; 
+            }             EventSystem.current.SetSelectedGameObject(null); // Reset selection
             EventSystem.current.firstSelectedGameObject = option_button;
             EventSystem.current.SetSelectedGameObject(option_button); // Apply selection
             Cursor.lockState = CursorLockMode.None;
@@ -106,7 +113,12 @@ public class PauseMenuAkash : MonoBehaviour
     }
 
     public void BackButtonPause(){
-        pm.enabled =true;
+        if(acc_mode){
+            pmacc.enabled = true;
+        }
+        else{
+            pm.enabled = true; 
+        }        
         cb.enabled = true;
         escape = false;
         Time.timeScale = 1f;
@@ -118,7 +130,12 @@ public class PauseMenuAkash : MonoBehaviour
         ResetTriggers(pause);
     }
     public void BackButtonGrace(){
-        pm.enabled =true;
+        if(acc_mode){
+            pmacc.enabled = true;
+        }
+        else{
+            pm.enabled = true; 
+        }         
         cb.enabled = true;
         dm.grace = false;
         escape = false;
@@ -169,6 +186,10 @@ public class PauseMenuAkash : MonoBehaviour
         EventSystem.current.firstSelectedGameObject = control_button;
         EventSystem.current.SetSelectedGameObject(control_button); // Apply selection
         NoSubMenusActive = false;
+    }
+    public void AccModeControl()
+    {
+        acc_mode = acc_mode_toggle.isOn ? true : false;
     }
 
     public void ExitButtonPause(){
@@ -232,7 +253,12 @@ public class PauseMenuAkash : MonoBehaviour
         Debug.Log(data.position[0]);
         Debug.Log(data.position[1]);
         Debug.Log(data.position[2]);
-        pm.enabled =true;
+        if(acc_mode){
+            pmacc.enabled = true;
+        }
+        else{
+            pm.enabled = true; 
+        }         
         cb.enabled = true;
         escape = false;
         ResetTriggers(pause);

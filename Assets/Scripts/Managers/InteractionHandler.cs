@@ -49,7 +49,8 @@ public class InteractionHandler : MonoBehaviour
     public GameObject main_cam;
     public CinemachineBrain cb;    // public Slider mouseSens;
     public PlayerMovementAlt pm; 
-
+    public PlayerMovementAcc pmacc; 
+    public PauseMenuAkash pma;
     // public AudioSource source;
     // public AudioClip clip;
 
@@ -114,8 +115,12 @@ public class InteractionHandler : MonoBehaviour
                 // }
                 cb.enabled = false;
                 // main_cam.transform.rotation = dialogue_camera.transform.rotation;
-                pm.enabled = false;
-                // main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, dialogue_camera.transform.position, 10f * Time.deltaTime);
+                if(pma.acc_mode){
+                    pmacc.enabled = false;
+                }
+                else{
+                    pm.enabled = false; 
+                }                // main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, dialogue_camera.transform.position, 10f * Time.deltaTime);
         }
   
     }
@@ -218,7 +223,12 @@ public class InteractionHandler : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         cb.enabled = true;
-        pm.enabled = true;
+        if(pma.acc_mode){
+            pmacc.enabled = true;
+        }
+        else{
+            pm.enabled = true; 
+        }
         dialogueLines.Clear();
         dialogueOptions.Clear();
         dialogueName.text ="";

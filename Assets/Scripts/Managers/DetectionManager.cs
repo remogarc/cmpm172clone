@@ -13,6 +13,7 @@ public class DetectionManager : MonoBehaviour
     [SerializeField] private LayerMask detectionLayer; 
     PlayerControls pc;
     public PlayerMovementAlt pm;
+    public PlayerMovementAcc pmacc;
     public LostGrace lg;
     public GameObject grace_text;
     public Camera mc;
@@ -41,7 +42,7 @@ public class DetectionManager : MonoBehaviour
     private void Update()
     {
         // Pressing E to interact with objects/npcs from a range
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse2))
         {
             Debug.Log("Pressed");
             DetectObjects();
@@ -84,7 +85,12 @@ public class DetectionManager : MonoBehaviour
                         Transform grace_cam = obj.transform.Find("Camera");
                         mc.transform.rotation = grace_cam.rotation;
                         mc.transform.position = grace_cam.position;
-                        pm.enabled = false;
+                        if(pma.acc_mode){
+                            pmacc.enabled = false;
+                        }
+                        else{
+                            pm.enabled = false; 
+                        }
                         cb.enabled = false;
                         grace_ui.SetActive(true);
 
