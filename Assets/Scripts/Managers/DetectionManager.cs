@@ -92,6 +92,8 @@ public class DetectionManager : MonoBehaviour
                             pm.enabled = false; 
                         }
                         cb.enabled = false;
+                        Cursor.lockState = CursorLockMode.None;
+                        Cursor.visible = true;
                         grace_ui.SetActive(true);
 
                     }

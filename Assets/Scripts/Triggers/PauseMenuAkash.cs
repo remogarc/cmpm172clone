@@ -139,6 +139,8 @@ public class PauseMenuAkash : MonoBehaviour
         cb.enabled = true;
         dm.grace = false;
         escape = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         pause.SetActive(false);
         mc.fieldOfView = 55.2f;
         grace_ui.SetActive(false);
