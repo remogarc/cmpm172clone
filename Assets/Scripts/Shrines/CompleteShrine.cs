@@ -17,10 +17,11 @@ public class CompleteShrine : MonoBehaviour
     public PlayerMovementAlt pm;
     public Prompt p;
     public Fader f;
+    public int count;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame

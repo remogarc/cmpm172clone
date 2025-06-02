@@ -7,6 +7,7 @@ public class PlayerData
 {
     public float[] position;
     public string scene;
+    public int diary_count;
     // Corrected constructor where the parameter 'pc' is assigned to 'player_coordinates'
     public PlayerData(Vector3 pc)
     {

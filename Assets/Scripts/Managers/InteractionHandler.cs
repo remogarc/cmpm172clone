@@ -113,9 +113,9 @@ public class InteractionHandler : MonoBehaviour
                 //     mc.fieldOfView = 137.0f;
                 // }
                 cb.enabled = false;
-                main_cam.transform.rotation = dialogue_camera.transform.rotation;
+                // main_cam.transform.rotation = dialogue_camera.transform.rotation;
                 pm.enabled = false;
-                main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, dialogue_camera.transform.position, 10f * Time.deltaTime);
+                // main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, dialogue_camera.transform.position, 10f * Time.deltaTime);
         }
   
     }

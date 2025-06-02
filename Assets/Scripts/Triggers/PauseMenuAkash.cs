@@ -61,6 +61,8 @@ public class PauseMenuAkash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         // pause.SetActive(false);
         // mouseValue = mouseSens.value;
         targetPosition = transform.position + offset;
@@ -96,8 +98,8 @@ public class PauseMenuAkash : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null); // Reset selection
             EventSystem.current.firstSelectedGameObject = option_button;
             EventSystem.current.SetSelectedGameObject(option_button); // Apply selection
-            // Cursor.lockState = CursorLockMode.None;
-            // Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             // Time.timeScale = 0f;
 
         }    
@@ -111,6 +113,8 @@ public class PauseMenuAkash : MonoBehaviour
         mc.fieldOfView = 55.2f;
         grace_ui.SetActive(false);
         dm.grace = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         ResetTriggers(pause);
     }
     public void BackButtonGrace(){
