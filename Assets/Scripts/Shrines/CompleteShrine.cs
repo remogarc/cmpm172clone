@@ -17,10 +17,11 @@ public class CompleteShrine : MonoBehaviour
     public PlayerMovementAlt pm;
     public Prompt p;
     public Fader f;
+    public int count;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -44,8 +45,11 @@ public class CompleteShrine : MonoBehaviour
         }
     }
     public void finish_shrine(){    
-        finished_shrines.Add(SceneManager.GetActiveScene().name);
+        if(!finished_shrines.Contains(SceneManager.GetActiveScene().name)){
+            finished_shrines.Add(SceneManager.GetActiveScene().name);
+        }
         t.text = "Shrine Complete";
+        Debug.Log("Control flow has entered the finish_shrin() funciotn");
         complete_text.SetActive(true);
     }
 

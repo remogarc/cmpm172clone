@@ -13,6 +13,7 @@ public class DetectionManager : MonoBehaviour
     [SerializeField] private LayerMask detectionLayer; 
     PlayerControls pc;
     public PlayerMovementAlt pm;
+    public PlayerMovementAcc pmacc;
     public LostGrace lg;
     public GameObject grace_text;
     public Camera mc;
@@ -27,6 +28,7 @@ public class DetectionManager : MonoBehaviour
     public Prompt p;
     public Location l;
     public CompleteShrine cs;
+    public Diary d;
 
     private void Awake(){
         pc = new PlayerControls();
@@ -41,7 +43,7 @@ public class DetectionManager : MonoBehaviour
     private void Update()
     {
         // Pressing E to interact with objects/npcs from a range
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse2))
         {
             Debug.Log("Pressed");
             DetectObjects();
@@ -84,8 +86,15 @@ public class DetectionManager : MonoBehaviour
                         Transform grace_cam = obj.transform.Find("Camera");
                         mc.transform.rotation = grace_cam.rotation;
                         mc.transform.position = grace_cam.position;
-                        pm.enabled = false;
+                        if(pma.acc_mode){
+                            pmacc.enabled = false;
+                        }
+                        else{
+                            pm.enabled = false; 
+                        }
                         cb.enabled = false;
+                        Cursor.lockState = CursorLockMode.None;
+                        Cursor.visible = true;
                         grace_ui.SetActive(true);
 
                     }
@@ -140,12 +149,15 @@ public class DetectionManager : MonoBehaviour
                 // If the script on the object does exist, do the thing
                 if (interaction != null)
                 {
-
-                    // Debug.Log("Call interactor");
-                    interaction.Interact(); // Call the interactionhandler's interact function
-                    if(obj.name == "diary"){
+                    if(obj.tag == "diary"){
+                        if(!d.found_diaries.Contains(obj.name)){
+                            d.found_diaries.Add(obj.name);
+                        }
                         cs.finish_shrine();
                     }
+                    // Debug.Log("Call interactor");
+                    interaction.Interact(); // Call the interactionhandler's interact function
+
                 }
                 else{
                     Debug.Log(interaction);

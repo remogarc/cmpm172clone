@@ -1,14 +1,16 @@
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
+
 public static class SaveSystem
 {
-    public static void SavePlayer(Vector3 p){
+    public static void SavePlayer(Vector3 p, List<string> f_diaries){
             BinaryFormatter formatter = new BinaryFormatter();
             string path = Application.persistentDataPath + "/player.fun";
             FileStream stream = new FileStream(path, FileMode.Create);
 
-            PlayerData data = new PlayerData(p);
+            PlayerData data = new PlayerData(p, f_diaries);
             
             formatter.Serialize(stream, data);
             stream.Close();
