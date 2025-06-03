@@ -252,4 +252,29 @@ public class PauseMenuAkash : MonoBehaviour
         yield return null; // Wait one frame
         menu.SetActive(false);
     }
+
+    // Language switching methods for UI buttons
+    public void SelectEnglish()
+    {
+        if (LanguageManager.Instance != null)
+        {
+            LanguageManager.Instance.SetLanguageToEnglish();
+        }
+    }
+
+    public void SelectSpanish()
+    {
+        if (LanguageManager.Instance != null)
+        {
+            LanguageManager.Instance.SetLanguageToSpanish();
+        }
+    }
+
+    public void SelectFrench()
+    {
+        if (LanguageManager.Instance != null)
+        {
+            LanguageManager.Instance.SetLanguageToFrench();
+        }
+    }
 }
