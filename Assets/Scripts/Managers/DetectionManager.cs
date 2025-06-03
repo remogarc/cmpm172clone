@@ -28,6 +28,7 @@ public class DetectionManager : MonoBehaviour
     public Prompt p;
     public Location l;
     public CompleteShrine cs;
+    public Diary d;
 
     private void Awake(){
         pc = new PlayerControls();
@@ -148,12 +149,15 @@ public class DetectionManager : MonoBehaviour
                 // If the script on the object does exist, do the thing
                 if (interaction != null)
                 {
-
-                    // Debug.Log("Call interactor");
-                    interaction.Interact(); // Call the interactionhandler's interact function
-                    if(obj.name == "diary"){
+                    if(obj.tag == "diary"){
+                        if(!d.found_diaries.Contains(obj.name)){
+                            d.found_diaries.Add(obj.name);
+                        }
                         cs.finish_shrine();
                     }
+                    // Debug.Log("Call interactor");
+                    interaction.Interact(); // Call the interactionhandler's interact function
+
                 }
                 else{
                     Debug.Log(interaction);
