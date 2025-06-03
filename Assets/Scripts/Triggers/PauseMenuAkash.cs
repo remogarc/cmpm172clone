@@ -49,6 +49,7 @@ public class PauseMenuAkash : MonoBehaviour
     private Vector3 targetPosition;
     public Camera mc;    
     public Diary d;
+    public static bool load;
 
     // public float mouseValue;
     // public int test;=
@@ -66,15 +67,25 @@ public class PauseMenuAkash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        load = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         // pause.SetActive(false);
         // mouseValue = mouseSens.value;
         targetPosition = transform.position + offset;
+
+        if(SceneManager.GetActiveScene().name == "Start"){
+            EventSystem.current.firstSelectedGameObject = option_button;
+            EventSystem.current.SetSelectedGameObject(option_button); // Apply selecti
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
     // Update is called once per frame
     void Update()
     {
+        if(SceneManager.GetActiveScene().name != "Start"){
+
         if(escape){
             if(Vector3.Distance(transform.position, targetPosition) < 0.01f){
                 escape = false;
@@ -112,6 +123,7 @@ public class PauseMenuAkash : MonoBehaviour
             // Time.timeScale = 0f;
 
         }    
+        }
     }
 
     public void BackButtonPause(){
@@ -274,6 +286,12 @@ public class PauseMenuAkash : MonoBehaviour
         player.transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
         Debug.Log(player.transform.position); 
     }
+
+    public void LoadGameStart(){
+        load = true;
+        StartGame();
+    }
+
 
     private void ResetTriggers(GameObject menu)
     {

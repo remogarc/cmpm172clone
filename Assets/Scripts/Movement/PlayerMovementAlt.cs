@@ -47,9 +47,12 @@ public class PlayerMovementAlt : MonoBehaviour
     void Start()
     {
         DetectController();
-        if (SceneManager.GetActiveScene().name == "Overworld"){
-            pma.SaveGame();
+        if(PauseMenuAkash.load){
+            pma.LoadGame();
         }
+        // if (SceneManager.GetActiveScene().name == "Overworld"){
+        //     pma.SaveGame();
+        // }
         // Listen for device connection changes
         InputSystem.onDeviceChange += OnDeviceChange;
     }
