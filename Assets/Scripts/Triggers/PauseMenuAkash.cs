@@ -47,6 +47,7 @@ public class PauseMenuAkash : MonoBehaviour
     public Vector3 offset = new Vector3(0f, 10f, -20f); // how far up and back to move
     private Vector3 targetPosition;
     public Camera mc;    
+    public Diary d;
 
     // public float mouseValue;
     // public int test;=
@@ -244,7 +245,7 @@ public class PauseMenuAkash : MonoBehaviour
     }
 
     public void SaveGame(){
-        SaveSystem.SavePlayer(player.transform.position);
+        SaveSystem.SavePlayer(player.transform.position, d.found_diaries);
         Debug.Log("saved.");
     }
     public void StartGame(){
@@ -255,6 +256,11 @@ public class PauseMenuAkash : MonoBehaviour
         Debug.Log(data.position[0]);
         Debug.Log(data.position[1]);
         Debug.Log(data.position[2]);
+        for(int i = 0; i<11; i++){
+            if(!d.found_diaries.Contains(data.diaries[i]) && data.diaries[i] != "none"){
+                d.found_diaries.Add(data.diaries[i]);
+            }
+        }
         if(acc_mode){
             pmacc.enabled = true;
         }
