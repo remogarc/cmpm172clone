@@ -36,6 +36,7 @@ public class PauseMenuAkash : MonoBehaviour
     public GameObject lang_button;
     public GameObject control_back;
     public GameObject control_button;
+    public GameObject save_button;
     public DetectionManager dm;
     public Fader f;
     private bool NoSubMenusActive = true;
@@ -144,7 +145,7 @@ public class PauseMenuAkash : MonoBehaviour
         Cursor.visible = false;
         pause.SetActive(false);
         mc.fieldOfView = 55.2f;
-        grace_ui.SetActive(false);
+        ResetTriggers(grace_ui);
     }
     public void BackButtonOptions(){
         ResetTriggers(options);
