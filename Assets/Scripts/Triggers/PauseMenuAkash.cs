@@ -43,6 +43,10 @@ public class PauseMenuAkash : MonoBehaviour
     public bool acc_mode = false;
     public Toggle acc_mode_toggle;
 
+    [Header("Development Settings")]
+    [Tooltip("Disable cursor locking during development - UNCHECK for builds!")]
+    public bool developmentMode = true;
+
     bool triangle;
     PlayerControls pc;
     public Vector3 offset = new Vector3(0f, 10f, -20f); // how far up and back to move
@@ -66,8 +70,17 @@ public class PauseMenuAkash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Debug.Log($"PauseMenuAkash started in scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
+        if (!developmentMode)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
         // pause.SetActive(false);
         // mouseValue = mouseSens.value;
         targetPosition = transform.position + offset;
@@ -127,8 +140,11 @@ public class PauseMenuAkash : MonoBehaviour
         mc.fieldOfView = 55.2f;
         grace_ui.SetActive(false);
         dm.grace = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (!developmentMode)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         ResetTriggers(pause);
     }
     public void BackButtonGrace(){
@@ -141,8 +157,11 @@ public class PauseMenuAkash : MonoBehaviour
         cb.enabled = true;
         dm.grace = false;
         escape = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (!developmentMode)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         pause.SetActive(false);
         mc.fieldOfView = 55.2f;
         ResetTriggers(grace_ui);
@@ -295,25 +314,43 @@ public class PauseMenuAkash : MonoBehaviour
     // Language switching methods for UI buttons
     public void SelectEnglish()
     {
+        Debug.Log("SelectEnglish() called");
         if (LanguageManager.Instance != null)
         {
+            Debug.Log("LanguageManager.Instance found, calling SetLanguageToEnglish()");
             LanguageManager.Instance.SetLanguageToEnglish();
+        }
+        else
+        {
+            Debug.LogError("LanguageManager.Instance is null!");
         }
     }
 
     public void SelectSpanish()
     {
+        Debug.Log("SelectSpanish() called");
         if (LanguageManager.Instance != null)
         {
+            Debug.Log("LanguageManager.Instance found, calling SetLanguageToSpanish()");
             LanguageManager.Instance.SetLanguageToSpanish();
+        }
+        else
+        {
+            Debug.LogError("LanguageManager.Instance is null!");
         }
     }
 
     public void SelectFrench()
     {
+        Debug.Log("SelectFrench() called");
         if (LanguageManager.Instance != null)
         {
+            Debug.Log("LanguageManager.Instance found, calling SetLanguageToFrench()");
             LanguageManager.Instance.SetLanguageToFrench();
+        }
+        else
+        {
+            Debug.LogError("LanguageManager.Instance is null!");
         }
     }
 }
