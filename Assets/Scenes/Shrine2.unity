@@ -53224,6 +53224,7 @@ GameObject:
   - component: {fileID: 2075117283}
   - component: {fileID: 2075117284}
   - component: {fileID: 2075117285}
+  - component: {fileID: 2075117286}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53568,6 +53569,24 @@ MonoBehaviour:
   currentLanguage: English
   enableDebugLogs: 1
   showRegisteredTexts: 1
+--- !u!114 &2075117286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075117272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d558d11a645ee6458ad70e35d951984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueMappings:
+  - displayName: Diary
+    dialogueKey: old_book
+    targetObject: {fileID: 274048590}
+  autoSetupOnStart: 1
+  enableDebugLogs: 1
 --- !u!1 &2084649834
 GameObject:
   m_ObjectHideFlags: 0

@@ -16674,6 +16674,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 560991273}
+    - targetCorrespondingSourceObject: {fileID: 6788538757290762323, guid: ad4137f595ec8e2449cacca9df7d3735,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 560991279}
   m_SourcePrefab: {fileID: 100100000, guid: ad4137f595ec8e2449cacca9df7d3735, type: 3}
 --- !u!1 &263923272 stripped
 GameObject:
@@ -37363,6 +37367,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 258277715}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &560991279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560991272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808f559a72b0e2e418fef5825d030400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueKey: joe
+  enableDebugLogs: 0
 --- !u!1 &563418795
 GameObject:
   m_ObjectHideFlags: 0
@@ -147915,6 +147933,7 @@ GameObject:
   - component: {fileID: 2075117285}
   - component: {fileID: 2075117286}
   - component: {fileID: 2075117287}
+  - component: {fileID: 2075117288}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -148269,6 +148288,30 @@ MonoBehaviour:
   currentLanguage: English
   enableDebugLogs: 1
   showRegisteredTexts: 1
+--- !u!114 &2075117288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075117272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d558d11a645ee6458ad70e35d951984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueMappings:
+  - displayName: Jeff
+    dialogueKey: jeff
+    targetObject: {fileID: 252673929}
+  - displayName: Old Book
+    dialogueKey: old_book
+    targetObject: {fileID: 675534323}
+  - displayName: Joe
+    dialogueKey: joe
+    targetObject: {fileID: 560991272}
+  autoSetupOnStart: 1
+  enableDebugLogs: 1
 --- !u!1001 &2075520892
 PrefabInstance:
   m_ObjectHideFlags: 0
