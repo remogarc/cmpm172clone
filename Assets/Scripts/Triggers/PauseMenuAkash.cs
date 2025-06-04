@@ -43,6 +43,10 @@ public class PauseMenuAkash : MonoBehaviour
     public bool acc_mode = false;
     public Toggle acc_mode_toggle;
 
+    [Header("Development Settings")]
+    [Tooltip("Disable cursor locking during development - UNCHECK for builds!")]
+    public bool developmentMode = true;
+
     bool triangle;
     PlayerControls pc;
     public Vector3 offset = new Vector3(0f, 10f, -20f); // how far up and back to move
@@ -50,7 +54,6 @@ public class PauseMenuAkash : MonoBehaviour
     public Camera mc;    
     public Diary d;
     public static bool load;
-
     // public float mouseValue;
     // public int test;=
     void Awake(){
@@ -67,25 +70,24 @@ public class PauseMenuAkash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        load = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        // pause.SetActive(false);
-        // mouseValue = mouseSens.value;
-        targetPosition = transform.position + offset;
-
-        if(SceneManager.GetActiveScene().name == "Start"){
-            EventSystem.current.firstSelectedGameObject = option_button;
-            EventSystem.current.SetSelectedGameObject(option_button); // Apply selecti
+        Debug.Log($"PauseMenuAkash started in scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
+        if (!developmentMode)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+        // pause.SetActive(false);
+        // mouseValue = mouseSens.value;
+        targetPosition = transform.position + offset;
     }
     // Update is called once per frame
     void Update()
     {
-        if(SceneManager.GetActiveScene().name != "Start"){
-
         if(escape){
             if(Vector3.Distance(transform.position, targetPosition) < 0.01f){
                 escape = false;
@@ -123,7 +125,6 @@ public class PauseMenuAkash : MonoBehaviour
             // Time.timeScale = 0f;
 
         }    
-        }
     }
 
     public void BackButtonPause(){
@@ -139,8 +140,11 @@ public class PauseMenuAkash : MonoBehaviour
         mc.fieldOfView = 55.2f;
         grace_ui.SetActive(false);
         dm.grace = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (!developmentMode)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         ResetTriggers(pause);
     }
     public void BackButtonGrace(){
@@ -153,8 +157,11 @@ public class PauseMenuAkash : MonoBehaviour
         cb.enabled = true;
         dm.grace = false;
         escape = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (!developmentMode)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         pause.SetActive(false);
         mc.fieldOfView = 55.2f;
         ResetTriggers(grace_ui);
@@ -287,12 +294,6 @@ public class PauseMenuAkash : MonoBehaviour
         Debug.Log(player.transform.position); 
     }
 
-    public void LoadGameStart(){
-        load = true;
-        StartGame();
-    }
-
-
     private void ResetTriggers(GameObject menu)
     {
         Animator[] animators = menu.GetComponentsInChildren<Animator>(true);
@@ -309,7 +310,8 @@ public class PauseMenuAkash : MonoBehaviour
         yield return null; // Wait one frame
         menu.SetActive(false);
     }
-// Language switching methods for UI buttons
+
+    // Language switching methods for UI buttons
     public void SelectEnglish()
     {
         Debug.Log("SelectEnglish() called");
