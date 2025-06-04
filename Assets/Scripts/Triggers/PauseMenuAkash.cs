@@ -309,4 +309,46 @@ public class PauseMenuAkash : MonoBehaviour
         yield return null; // Wait one frame
         menu.SetActive(false);
     }
+// Language switching methods for UI buttons
+    public void SelectEnglish()
+    {
+        Debug.Log("SelectEnglish() called");
+        if (LanguageManager.Instance != null)
+        {
+            Debug.Log("LanguageManager.Instance found, calling SetLanguageToEnglish()");
+            LanguageManager.Instance.SetLanguageToEnglish();
+        }
+        else
+        {
+            Debug.LogError("LanguageManager.Instance is null!");
+        }
+    }
+
+    public void SelectSpanish()
+    {
+        Debug.Log("SelectSpanish() called");
+        if (LanguageManager.Instance != null)
+        {
+            Debug.Log("LanguageManager.Instance found, calling SetLanguageToSpanish()");
+            LanguageManager.Instance.SetLanguageToSpanish();
+        }
+        else
+        {
+            Debug.LogError("LanguageManager.Instance is null!");
+        }
+    }
+
+    public void SelectFrench()
+    {
+        Debug.Log("SelectFrench() called");
+        if (LanguageManager.Instance != null)
+        {
+            Debug.Log("LanguageManager.Instance found, calling SetLanguageToFrench()");
+            LanguageManager.Instance.SetLanguageToFrench();
+        }
+        else
+        {
+            Debug.LogError("LanguageManager.Instance is null!");
+        }
+    }
 }
