@@ -40,7 +40,6 @@ public class InteractionHandler : MonoBehaviour
     public bool quest_complete_first = false;
     public bool quest_complete = false;
 
-
     public string[] sentences;
     private bool skip = false;
     // Reference that tracks the current line of dialogue
@@ -51,8 +50,35 @@ public class InteractionHandler : MonoBehaviour
     public PlayerMovementAlt pm; 
     public PlayerMovementAcc pmacc; 
     public PauseMenuAkash pma;
+    
+    // Localization support
+    private DialogueTranslation currentLocalizedDialogue;
+    private bool useLocalizedDialogue = false;
+    
     // public AudioSource source;
     // public AudioClip clip;
+
+    // Method to set localized dialogue (called by LocalizedDialogue component)
+    public void SetLocalizedDialogue(DialogueTranslation dialogueTranslation)
+    {
+        currentLocalizedDialogue = dialogueTranslation;
+        useLocalizedDialogue = (dialogueTranslation != null);
+        
+        if (useLocalizedDialogue)
+        {
+            // Update the dialogue name and sentences from the localized version
+            dialogue.name = dialogueTranslation.name;
+            dialogue.sentences = dialogueTranslation.sentences;
+            
+            // Also update quest and choice arrays if they exist in the translation
+            if (dialogueTranslation.quest_check != null && dialogueTranslation.quest_check.Length > 0)
+                dialogue.quest_check = dialogueTranslation.quest_check;
+            if (dialogueTranslation.quest_complete != null && dialogueTranslation.quest_complete.Length > 0)
+                dialogue.quest_complete = dialogueTranslation.quest_complete;
+            if (dialogueTranslation.choices != null && dialogueTranslation.choices.Length > 0)
+                dialogue.choices = dialogueTranslation.choices;
+        }
+    }
 
     // Called by the detection manager to interact with the object on E press.
     public void Interact()
@@ -85,7 +111,17 @@ public class InteractionHandler : MonoBehaviour
         }
         else{
             chatBoxPrefab.SetActive(true);
-            sentences = dialogue.sentences;
+            
+            // Use localized dialogue if available, otherwise fall back to the original dialogue
+            if (useLocalizedDialogue && currentLocalizedDialogue != null)
+            {
+                sentences = currentLocalizedDialogue.sentences;
+            }
+            else
+            {
+                sentences = dialogue.sentences;
+            }
+            
             // CheckQuest();
             StartDialogue(dialogue);
         }
@@ -168,7 +204,10 @@ public class InteractionHandler : MonoBehaviour
     public void StartDialogue(Dialogue dialogue){
         Debug.Log("Starting conversation with " + dialogue.name);
         optionBoxPrefab.SetActive(false);
+        
+        // Use the dialogue name (which may have been updated by localization)
         dialogueName.text = dialogue.name;
+        
         int i = 0;
         foreach (string sentence in sentences){
             Debug.Log(sentence);

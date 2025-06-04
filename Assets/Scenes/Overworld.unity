@@ -49707,8 +49707,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3075051838042620131, guid: 0f9ba06830ac04efd8f0c02adb52041b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 675534324}
   m_SourcePrefab: {fileID: 100100000, guid: 0f9ba06830ac04efd8f0c02adb52041b, type: 3}
+--- !u!1 &675534323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3075051838042620131, guid: 0f9ba06830ac04efd8f0c02adb52041b,
+    type: 3}
+  m_PrefabInstance: {fileID: 675534322}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &675534324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675534323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808f559a72b0e2e418fef5825d030400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueKey: old_book
+  enableDebugLogs: 0
 --- !u!1 &690657998
 GameObject:
   m_ObjectHideFlags: 0
@@ -105720,6 +105744,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1569286003}
+    - targetCorrespondingSourceObject: {fileID: 6788538757290762323, guid: ad4137f595ec8e2449cacca9df7d3735,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1569286004}
   m_SourcePrefab: {fileID: 100100000, guid: ad4137f595ec8e2449cacca9df7d3735, type: 3}
 --- !u!1 &1437764480 stripped
 GameObject:
@@ -118021,6 +118049,20 @@ MonoBehaviour:
   pm: {fileID: 423628594}
   pmacc: {fileID: 423628595}
   pma: {fileID: 2075117275}
+--- !u!114 &1569286004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252673929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808f559a72b0e2e418fef5825d030400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueKey: jeff
+  enableDebugLogs: 0
 --- !u!1001 &1576831463
 PrefabInstance:
   m_ObjectHideFlags: 0
