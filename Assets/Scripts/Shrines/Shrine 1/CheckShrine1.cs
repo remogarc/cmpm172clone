@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class CheckShrine1 : MonoBehaviour
 {
-    public Trigger1 t1;
-    public Trigger2 t2;
+
     public bool complete = false;
     public GameObject big_text; 
     public Text t;

@@ -2,7 +2,6 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using static PlayerMovement;
 
 public class Options : MonoBehaviour
 {

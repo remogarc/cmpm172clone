@@ -49,6 +49,7 @@ public class PlayerMovementAlt : MonoBehaviour
         DetectController();
         if(PauseMenuAkash.load){
             pma.LoadGame();
+            PauseMenuAkash.load = false;
         }
         // if (SceneManager.GetActiveScene().name == "Overworld"){
         //     pma.SaveGame();
