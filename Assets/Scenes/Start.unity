@@ -20158,18 +20158,6 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 1369676571}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &423628592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423628588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bec915cc4cc5664478f0113eafdc38f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &423628593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68728,10 +68716,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5608494581846345268, guid: 6c8adf6d21a048f459601951102985d5,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 423628592}
-    - targetCorrespondingSourceObject: {fileID: 5608494581846345268, guid: 6c8adf6d21a048f459601951102985d5,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 423628593}
     - targetCorrespondingSourceObject: {fileID: 5608494581846345268, guid: 6c8adf6d21a048f459601951102985d5,
         type: 3}
@@ -92552,7 +92536,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2075117274}
-  - component: {fileID: 2075117273}
   - component: {fileID: 2075117275}
   - component: {fileID: 2075117276}
   - component: {fileID: 2075117278}
@@ -92570,18 +92553,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2075117273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075117272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc1ca56a7589742938a11bd7d5620524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2075117274
 Transform:
   m_ObjectHideFlags: 0
@@ -92640,6 +92611,7 @@ MonoBehaviour:
   f: {fileID: 479608999}
   acc_mode: 0
   acc_mode_toggle: {fileID: 1691073355}
+  developmentMode: 1
   offset: {x: 0, y: 10, z: -20}
   mc: {fileID: 963194227}
   d: {fileID: 2075117286}
@@ -92657,7 +92629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 772962536}
   escape: {fileID: 1900234192}
-  camera: {fileID: 0}
+  camera: {fileID: 862300830}
   currentXSensitivity: {fileID: 1672309196}
   sx: {fileID: 929611351}
   currentYSensitivity: {fileID: 516375921}
