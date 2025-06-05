@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Cinemachine;
+using Unity.Services.Core;        // For UnityServices.InitializeAsync()
+using Unity.Services.Analytics;  // For Analytics.CustomEvent(...)
+using System.Threading.Tasks;    // For async/await
+using UnityEngine.Analytics;  // For UnityEngine.Analytics.Analytics.CustomEvent(...)
 
 public class PauseMenuAkash : MonoBehaviour
 {
@@ -70,6 +74,7 @@ public class PauseMenuAkash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UnityServices.InitializeAsync();
         Debug.Log($"PauseMenuAkash started in scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
         if (!developmentMode)
         {
@@ -84,6 +89,29 @@ public class PauseMenuAkash : MonoBehaviour
         // pause.SetActive(false);
         // mouseValue = mouseSens.value;
         targetPosition = transform.position + offset;
+
+
+        async Task InitializeServicesAndLog()
+        {
+            try
+            {
+                await UnityServices.InitializeAsync();
+
+                Debug.Log("Unity Services initialized.");
+
+                // Only now call analytics methods:
+                Analytics.CustomEvent("pause_menu_opened", new Dictionary<string, object> {
+                    { "time_opened", Time.realtimeSinceStartup }
+                });
+
+                Debug.Log("Pause menu analytics event sent.");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Failed to initialize Unity Services or log event: " + e.Message);
+            }
+        }
+
     }
     // Update is called once per frame
     void Update()
