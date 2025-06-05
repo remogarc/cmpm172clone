@@ -41,6 +41,7 @@ public class PauseMenuAkash : MonoBehaviour
     public GameObject control_back;
     public GameObject control_button;
     public GameObject save_button;
+    public GameObject chatbox;
     public DetectionManager dm;
     public Fader f;
     private bool NoSubMenusActive = true;
@@ -126,7 +127,7 @@ public class PauseMenuAkash : MonoBehaviour
             main_cam.transform.position = Vector3.MoveTowards(main_cam.transform.position, menu_cam.transform.position, speed * Time.deltaTime);
         }
         pos = player.transform.position;
-        if((Input.GetKeyDown(KeyCode.Escape) || triangle || Input.GetKeyDown(KeyCode.Mouse4)) && NoSubMenusActive)
+        if((Input.GetKeyDown(KeyCode.Escape) || triangle || Input.GetKeyDown(KeyCode.Mouse4)) && NoSubMenusActive && !chatbox.activeSelf)
         {
             // pause.SetActive(true);
             // options.SetActive(false);

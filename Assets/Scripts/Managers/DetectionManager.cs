@@ -72,11 +72,11 @@ public class DetectionManager : MonoBehaviour
                 if(obj.tag == "Grace" && pma.escape == false && prompt_check == false){
                     Debug.Log("23940oefijsodijflksdjf");
                     grace = true;
-                    if(!lg.discovered_wells.Contains(obj.name)){
-                        lg.discovered_wells.Add(obj.name);
-                        lg.new_grace();
-                    }
-                    else{
+                    // if(!lg.discovered_wells.Contains(obj.name)){
+                    //     lg.discovered_wells.Add(obj.name);
+                    //     lg.new_grace();
+                    // }
+                    // else{
                         if(!grace_ui.activeSelf){
                             EventSystem.current.SetSelectedGameObject(null); // Reset selection
                             EventSystem.current.firstSelectedGameObject = grace_back;
@@ -97,7 +97,7 @@ public class DetectionManager : MonoBehaviour
                         Cursor.visible = true;
                         grace_ui.SetActive(true);
 
-                    }
+                    // }
 
                 }
                 else if(obj.tag == "Shrine" && pma.escape == false && grace == false){
